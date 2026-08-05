@@ -78,6 +78,17 @@ public class DataTablePanel extends JPanel {
         // Привязываем модель к визуальной таблице
         table = new JTable(tableModel);
 
+        // --- УКРУПНЕНИЕ ТЕКСТА В ТАБЛИЦЕ ---
+        // 1. Устанавливаем шрифт для ячеек таблицы (например, размер 16)
+        table.setFont(new Font("SansSerif", Font.PLAIN, 16));
+
+        // 2. Устанавливаем шрифт для заголовков колонок (жирный, размер 16)
+        table.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 16));
+
+        // 3. Увеличиваем высоту строк, чтобы крупный текст не обрезался
+        // table.getRowHeight() возвращает текущую высоту, мы прибавляем к ней запас.
+        table.setRowHeight(table.getRowHeight() + 10);
+
         // --- ОТКЛЮЧАЕМ ПЕРЕТАСКИВАНИЕ СТОЛБЦОВ ---
         table.getTableHeader().setReorderingAllowed(false);
 
