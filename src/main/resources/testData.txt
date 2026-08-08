@@ -1,0 +1,81 @@
+Bugatti / Chiron Super Sport / 0 км/ч / -1000
+Koenigsegg / Jesko Absolut / 531 км/ч / 1000000
+Rimac / Nevera / 412 км/ч / $2200000
+Hennessey / Venom F5 / 500 км/ч / $2,100000
+McLaren / Speedtail / 403 км/ч / $2300000
+Pagani / Huayra Roadster BC / 383 км/ч / $3500000
+Ferrari / SF90 Stradale / 340 км/ч / $525000
+Lamborghini / Revuelto / 350 км/ч / $608000
+Porsche / 911 GT3 RS (992) / 296 км/ч / $223000
+Aston Martin / DBS 770 Ultimate / 3400 км/ч / $387000
+Lada / Granta / 179 км/ч / $11000
+Lada / Vesta / 182 км/ч / $16000
+Lada / Niva Legend / 142 км/ч / $10500
+Changan / Alsvin / 180 км/ч / $18500
+Geely / %%Emgrand / 10км/ч8 / $22000
+Renault Logan172 км/ч$14000
+Chevrolet / Cobalt / 170 км/ч / $15500
+Kia / Pegas / 170 км/ч / $15000
+Hyund____ai / Accent / 190 км/ч / $16500
+Suzuki / Alto / 140 км/ч / $11500
+Audi / A8 / 250 км/ч / $90000
+BMW / M3 Competition / 290 км/ч / $75000
+Mercedes-Benz / E-Class / 240 км/ч / $65000
+Volvo / XC90 / 210 км/ч / $60000
+Lexus / RX 450h / 200 км/ч / $58000
+Subaru / WRX STI / 255 км/ч / $40000
+Mitsubishi / Lancer Evolution / 250 км/ч / $45000
+Nissan / GT-R / 315 км/ч / $115000
+Infiniti / Q50 / 230 км/ч / $50000
+Acura / TLX / 220 км/ч / $45000
+Genesis / G90 / 240 км/ч / $70000
+Cadillac / CT5-V / 320 км/ч / $85000
+Lincoln / Navigator / 200 км/ч / $80000
+Buick / Enclave / 190 км/ч / $55000
+Chrysler / 300 / 210 км/ч / $40000
+Dodge / Charger SRT / 290 км/ч / $50000
+Jeep / Grand Cherokee / 220 км/ч / $60000
+Ford / Mustang GT / 300 км/ч / $55000
+Chevrolet / Corvette C8 / 312 км/ч / $70000
+GMC / Yukon / 190 км/ч / $65000
+Tesla / Model S Plaid / 322 км/ч / $110000
+Rivian / R1T / 180 км/ч / $73000
+Lucid / Air / 270 км/ч / $87000
+Polestar / 2 / 205 км/ч / $50000
+Alfa Romeo / Giulia / 280 км/ч / $45000
+Maserati / Ghibli / 290 км/ч / $80000
+Bentley / Continental GT / 333 км/ч / $220000
+Rolls-Royce / Phantom / 250 км/ч / $450000
+Land Rover / Range Rover / 220 км/ч / $130000
+Jaguar / F-Type / 300 км/ч / $75000
+Aston Martin / Vantage / 325 км/ч / $150000
+Audi / Q7 / 250 км/ч / $70000
+BMW / X5 M / 290 км/ч / $110000
+Mercedes-Benz / S-Class / 250 км/ч / $120000
+Volvo / S60 / 220 км/ч / $45000
+Lexus / ES 350 / 210 км/ч / $42000
+Subaru / Outback / 200 км/ч / $30000
+Mitsubishi / Outlander / 190 км/ч / $32000
+Nissan / Z / 250 км/ч / $55000
+Infiniti / QX80 / 210 км/ч / $75000
+Acura / RDX / 220 км/ч / $45000
+Genesis / GV80 / 235 км/ч / $65000
+Cadillac / Escalade / 210 км/ч / $90000
+Lincoln / Aviator / 210 км/ч / $70000
+Buick / LaCrosse / 200 км/ч / $35000
+Chrysler / Pacifica / 190 км/ч / $40000
+Dodge / Durango / 250 км/ч / $50000
+Jeep / Wrangler / 180 км/ч / $45000
+Ford / F-150 Raptor / 190 км/ч / $70000
+Chevrolet / Camaro ZL1 / 320 км/ч / $75000
+GMC / Sierra / 180 км/ч / $55000
+Tesla / Model 3 / 260 км/ч / $50000
+Rivian / R1S / 200 км/ч / $78000
+Lucid / Air Sapphire / 330 км/ч / $250000
+Polestar / 3 / 210 км/ч / $55000
+Alfa Romeo / Stelvio / 280 км/ч / $48000
+Maserati / Levante / 270 км/ч / $90000
+Bentley / Bentayga / 290 км/ч / $200000
+Rolls-Royce / Cullinan / 250 км/ч / $380000
+Land Rover / Defender / 190 км/ч / $70000
+Jaguar / F-Pace / 250 км/ч / $55000

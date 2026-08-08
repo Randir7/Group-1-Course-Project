@@ -28,6 +28,7 @@ import java.awt.*;
 public class AddManualFrame extends JDialog {
 
     // Поля ввода
+    private JTextField txtBrand;
     private JTextField txtModel;
     private JTextField txtSpeed;
     private JTextField txtPrice;
@@ -49,7 +50,7 @@ public class AddManualFrame extends JDialog {
         // --- 1. ВЕРХ (СЕВЕР): Текстовое сообщение с инструкцией ---
         // Использование HTML в JLabel позволяет делать текст жирным (<b>), переносить строки (<br>) и форматировать его.
         String instructionText = "<html><b>Инструкция:</b><br>" +
-                "Имя: только русские/английские буквы, цифры, дефис и пробелы. До 20 символов.<br>" +
+                "Марка и модель: только русские/английские буквы, цифры, дефис и пробелы. До 20 символов.<br>" +
                 "Скорость: число от 0 до 1500.<br>" +
                 "Цена: целое число от 0 до 2147483647.</html>";
 
@@ -58,7 +59,7 @@ public class AddManualFrame extends JDialog {
         lblInstructions.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         add(lblInstructions, BorderLayout.NORTH);
 
-        // --- 2. ЦЕНТР: Поля ввода (3 строки) ---
+        // --- 2. ЦЕНТР: Поля ввода (4 строки) ---
         // GridBagLayout — самый сложный, но и самый мощный менеджер компоновки в Swing.
         // Он позволяет выравнивать компоненты по сетке, склеивать ячейки и точно задавать их размер.
         JPanel formPanel = new JPanel(new GridBagLayout());
@@ -68,24 +69,33 @@ public class AddManualFrame extends JDialog {
         gbc.anchor = GridBagConstraints.WEST; // Прижимаем к левому краю
         gbc.fill = GridBagConstraints.HORIZONTAL; // Растягиваем по горизонтали
 
+
+
+        // Строка 0: Марка
+        gbc.gridx = 0; gbc.gridy = 0; gbc.weightx = 0;
+        formPanel.add(new JLabel("Марка:"), gbc);
+        gbc.gridx = 1; gbc.gridy = 0; gbc.weightx = 1.0;
+        txtBrand = new JTextField(20);
+        formPanel.add(txtBrand, gbc);
+
         // Строка 1: Модель
-        gbc.gridx = 0; gbc.gridy = 0; gbc.weightx = 0; // Колонка 0 не растягивается (вес 0)
+        gbc.gridx = 0; gbc.gridy = 1; gbc.weightx = 0;
         formPanel.add(new JLabel("Модель:"), gbc);
-        gbc.gridx = 1; gbc.gridy = 0; gbc.weightx = 1.0; // Колонка 1 забирает всё свободное место (вес 1)
+        gbc.gridx = 1; gbc.gridy = 1; gbc.weightx = 1.0;
         txtModel = new JTextField(20);
         formPanel.add(txtModel, gbc);
 
         // Строка 2: Максимальная скорость
-        gbc.gridx = 0; gbc.gridy = 1; gbc.weightx = 0;
+        gbc.gridx = 0; gbc.gridy = 2; gbc.weightx = 0;
         formPanel.add(new JLabel("Максимальная скорость:"), gbc);
-        gbc.gridx = 1; gbc.gridy = 1; gbc.weightx = 1.0;
+        gbc.gridx = 1; gbc.gridy = 2; gbc.weightx = 1.0;
         txtSpeed = new JTextField(20);
         formPanel.add(txtSpeed, gbc);
 
         // Строка 3: Цена
-        gbc.gridx = 0; gbc.gridy = 2; gbc.weightx = 0;
+        gbc.gridx = 0; gbc.gridy = 3; gbc.weightx = 0;
         formPanel.add(new JLabel("Цена:"), gbc);
-        gbc.gridx = 1; gbc.gridy = 2; gbc.weightx = 1.0;
+        gbc.gridx = 1; gbc.gridy = 3; gbc.weightx = 1.0;
         txtPrice = new JTextField(20);
         formPanel.add(txtPrice, gbc);
 
@@ -120,6 +130,10 @@ public class AddManualFrame extends JDialog {
      * ДО того, как он попадет в текстовое поле. Это позволяет разрешать или запрещать символы на лету.
      */
     private void setupInputFilters() {
+        // Марка: те же правила, что и для модели
+        ((AbstractDocument) txtBrand.getDocument()).setDocumentFilter(new InputRestrictionFilter(20, "[a-zA-Zа-яА-ЯёЁ0-9\\- ]+"));
+
+
         // Модель: буквы, цифры, дефис, пробел. Максимум 20 символов.
         ((AbstractDocument) txtModel.getDocument()).setDocumentFilter(new InputRestrictionFilter(20, "[a-zA-Zа-яА-ЯёЁ0-9\\- ]+"));
 
@@ -182,12 +196,14 @@ public class AddManualFrame extends JDialog {
     // --- МЕТОДЫ API ДЛЯ КОНТРОЛЛЕРА ---
 
     public void clearFields() {
+        txtBrand.setText("");
         txtModel.setText("");
         txtSpeed.setText("");
         txtPrice.setText("");
     }
 
     // Геттеры для текста. Контроллер вызовет их, когда пользователь нажмет "Добавить модель"
+    public String getBrandText() { return txtBrand.getText(); }
     public String getModelText() { return txtModel.getText(); }
     public String getSpeedText() { return txtSpeed.getText(); }
     public String getPriceText() { return txtPrice.getText(); }

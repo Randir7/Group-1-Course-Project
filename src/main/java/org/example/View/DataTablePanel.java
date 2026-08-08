@@ -51,7 +51,7 @@ public class DataTablePanel extends JPanel {
         setLayout(new BorderLayout());
 
         // --- НАСТРОЙКА МОДЕЛИ ТАБЛИЦЫ ---
-        String[] columnNames = {"Модель", "Максимальная скорость", "Цена"};
+        String[] columnNames = {"Марка", "Модель", "Максимальная скорость", "Цена"};
 
         // Создаем анонимный класс, переопределяя DefaultTableModel,
         // чтобы настроить поведение таблицы под наши нужды.
@@ -62,8 +62,8 @@ public class DataTablePanel extends JPanel {
             // и для выравнивания (например, числа по умолчанию прижимаются вправо).
             @Override
             public Class<?> getColumnClass(int columnIndex) {
-                if (columnIndex == 0) return String.class; // Колонка 0 - текст
-                return Integer.class; // Колонки 1 и 2 - целые числа
+                if (columnIndex == 0 || columnIndex == 1) return String.class; // Марка и Модель
+                return Integer.class; // Скорость и Цена
             }
 
             // Запрещаем редактирование ячеек таблицы двойным кликом.
@@ -218,10 +218,11 @@ public class DataTablePanel extends JPanel {
      */
     public Object[] getClickedRowData() {
         if (clickedRowIndex != -1) {
-            Object modelName = tableModel.getValueAt(clickedRowIndex, 0);
-            Object speed = tableModel.getValueAt(clickedRowIndex, 1);
-            Object price = tableModel.getValueAt(clickedRowIndex, 2);
-            return new Object[]{modelName, speed, price};
+            Object brandName = tableModel.getValueAt(clickedRowIndex, 0);
+            Object modelName = tableModel.getValueAt(clickedRowIndex, 1);
+            Object speed = tableModel.getValueAt(clickedRowIndex, 2);
+            Object price = tableModel.getValueAt(clickedRowIndex, 3);
+            return new Object[]{brandName, modelName, speed, price};
         }
         return null;
     }
@@ -245,15 +246,13 @@ public class DataTablePanel extends JPanel {
      * @param cars Список машин, полученный от Модели.
      */
     public void updateTable(List<Car> cars) {
-        // Сначала полностью очищаем старые данные
         clearTable();
-        // Если список пуст, просто оставляем таблицу пустой
         if (cars == null || cars.isEmpty()) {
             return;
         }
-        // Проходим по всем машинам и добавляем их в модель таблицы
         for (Car car : cars) {
             Object[] rowData = new Object[]{
+                    car.getBrandName(),  // Добавлено
                     car.getModelName(),
                     car.getMaxSpeed(),
                     car.getPrice()

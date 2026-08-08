@@ -15,6 +15,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
@@ -37,10 +39,9 @@ public class AppModel {
      * Создает и добавляет один объект Car в коллекцию.
      * @return созданный объект Car
      */
-    public Car addSingleCar(String modelName, int maxSpeed, int price) {
-        Car car = validateAndCreate(modelName, maxSpeed, price);
-        //расскомментировать после реализации кастомной коллекции
-        //cars.add(car);
+    public Car addSingleCar(String brandName, String modelName, int maxSpeed, int price) {
+        Car car = validateAndCreate(brandName, modelName, maxSpeed, price);
+        cars.add(car);
         return car;
     }
 
@@ -52,41 +53,50 @@ public class AppModel {
      */
     public List<String> addCarsFromUserFile(Path filePath) {
         ParseResult result = parseDataFromFile(filePath);
-        //расскомментировать после реализации кастомной коллекции
-        //cars.addAll(result.cars);
+        cars.addAll(result.cars);
         return result.errors;
     }
 
     /**
-     * Генерация случайного списка машин.
-     * Модель берет заготовки машин из специального файла ресурсов (randomData.txt),
-     * случайно выбирает нужное количество и делает их независимые копии.
-     * Возвращает лист со списком ошибок
+     * Из заранее созданного списка randomData.txt (лежит в папке resources)
+     * создает указанное количество машин и добавляет их в список cars модели.
+     * Заполнение коллекции реализовано через Stream API.
      */
+    //TODO реализовать метод
     public List<String> addRandomCars(int count) {
-        return null;
+        List<String> errorMessages = new ArrayList<>();
+
+        //реализуй метод здесь
+
+        return errorMessages;
     }
 
     /**
      * Валидация и создание объекта Car.
      * Мы используем паттерн проектирования "Строитель" (Builder).
      * Если данные невалидны (например, скорость 2000), конструктор Builder'а
-     * бросит IllegalArgumentException. Мы НЕ ловим исключение здесь!
+     * бросит IllegalArgumentException. Мы НЕ ловим её здесь!
      * Задача Модели — выбросить исключение, а задача Контроллера — поймать его
      * и сообщить пользователю.
-     * Следует использовать этот метод для создания всех экземпляров машин
      */
-    public Car validateAndCreate(String modelName, int maxSpeed, int price) {
-        return new Car.CarBuilder().setModelName(modelName).setMaxSpeed(maxSpeed).setPrice(price).build();
+    public Car validateAndCreate(String brandName, String modelName, int maxSpeed, int price) {
+        return new Car.CarBuilder()
+                .setBrandName(brandName)
+                .setModelName(modelName)
+                .setMaxSpeed(maxSpeed)
+                .setPrice(price)
+                .build();
     }
 
     /**
      * Преобразование объекта Car в строку для записи в файл.
-     * Формат жестко задан: "Имя / Скорость км/ч / $Цена"
+     * Формат жестко задан: "Имя бренда / Имя модели / Скорость км/ч / $Цена"
      */
     public String carToString(Car car) {
         if (car == null) return "";
-        return String.format("%s / %d км/ч / $%d",
+        // Добавляем %s для марки в начало
+        return String.format("%s / %s / %d км/ч / $%d",
+                car.getBrandName(),
                 car.getModelName(),
                 car.getMaxSpeed(),
                 car.getPrice());
@@ -94,13 +104,16 @@ public class AppModel {
 
     /**
      * Метод парсинга (разбора) файла.
-     * Читает файл построчно, должен проверять формат с помощью регулярных выражений.
+     * Читает файл построчно, проверяет формат с помощью регулярных выражений.
      * Не добавляет машины в основную коллекцию, а возвращает результат в объекте ParseResult.
      */
-
-    //TODO требуется реализовать метод
+    //TODO реализовать метод
     public ParseResult parseDataFromFile(Path filePath) {
-        return null;
+        List<Car> parsedCars = new ArrayList<>();
+        List<String> errorMessages = new ArrayList<>();
+        //реализуй метод здесь
+
+        return new ParseResult(parsedCars, errorMessages);
     }
 
     /**
@@ -108,7 +121,7 @@ public class AppModel {
      * Метод объявлен с throws IOException. Это значит, что он перекладывает
      * ответственность за обработку ошибок ввода-вывода на того, кто его вызывает (на Контроллер).
      */
-    //TODO требуется реализовать метод
+    //TODO реализовать метод
     public void saveDataToFile(Path filePath) throws IOException {
 
     }
@@ -120,15 +133,19 @@ public class AppModel {
      */
     public void sortCars(int columnIndex, boolean ascending) {
         switch (columnIndex) {
-            case 0: // Имя
+            case 0: // Марка
+                if (ascending) cars.sortByBrandAsc();
+                else cars.sortByBrandDesc();
+                break;
+            case 1: // Модель
                 if (ascending) cars.sortByNameAsc();
                 else cars.sortByNameDesc();
                 break;
-            case 1: // Скорость
+            case 2: // Скорость
                 if (ascending) cars.sortBySpeedAsc();
                 else cars.sortBySpeedDesc();
                 break;
-            case 2: // Цена
+            case 3: // Цена
                 if (ascending) cars.sortByPriceAsc();
                 else cars.sortByPriceDesc();
                 break;
@@ -137,10 +154,9 @@ public class AppModel {
         }
     }
 
-    //Метод-заглушка. Требуется организовать особую сортировку в кастомной коллекции для его работы
-    //TODO реализовать метод
+    // Метод-заглушка. В будущем здесь будет логика особой сортировки.
     public void specialSort() {
-        //cars.specialSort();
+        cars.specialSort();
     }
 
     /**
@@ -152,12 +168,38 @@ public class AppModel {
      * @throws IllegalStateException Если список машин пуст.
      * @throws InterruptedException Если потоки были прерваны.
      */
-    //TODO реализовать метод многопоточного подсчета
-    public String multithreadCounting(String modelName, int maxSpeed, int price)
+    //TODO реализовать метод
+    public String multithreadCounting(String brandName, String modelName, int maxSpeed, int price)
             throws InterruptedException {
-        return null;
+        // Переменная для записи количества найденных одинаковых автомобилей
+        AtomicInteger count = new AtomicInteger(0);
+        // Создаем эталонный объект Car (если данные невалидны, будет IllegalArgumentException)
+        Car targetCar = null; //сейчас это заглушка, чтобы код со StringBuilder компилировался
+
+
+        //реализуй метод здесь
+
+
+        // Формируем текстовый ответ для Контроллера
+        StringBuilder sb = new StringBuilder();
+        sb.append("==================================================\n");
+        sb.append("Многопоточный подсчет завершен.\n");
+        sb.append("Искомый элемент: ").append(targetCar.getModelName())
+                .append(" / ").append(targetCar.getMaxSpeed()).append(" км/ч / $").append(targetCar.getPrice()).append("\n");
+        sb.append("Количество вхождений в коллекцию: ").append(count.get()).append("\n");
+        sb.append("==================================================\n");
+
+        // Возвращаем результат, НЕ печатая его сами!
+        return sb.toString();
     }
 
+
+    /**
+     * Очистка всех данных.
+     */
+    public void clearData() {
+        cars.clear();
+    }
 
     /**
      * Геттер для получения списка машин.
@@ -172,7 +214,7 @@ public class AppModel {
      * Вспомогательный статический класс-контейнер.
      * В Java метод может вернуть только одно значение. Если нужно вернуть
      * и список успешно распарсенных машин, и список ошибок, их упаковывают
-     * в один объект-контейнер, чтобы избежать использования кортежа
+     * в один объект-контейнер. Это отличный пример вложенного класса.
      */
     public static class ParseResult {
         public final List<Car> cars;

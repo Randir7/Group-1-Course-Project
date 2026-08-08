@@ -21,6 +21,7 @@ public class Car {
 
     // Поля объекта объявлены как private. Доступ к ним извне только через геттеры.
     // Они не final, но логически объект неизменяем, так как сеттеров нет.
+    private String brandName;
     private String modelName;
     private int maxSpeed;
     private int price;
@@ -31,7 +32,8 @@ public class Car {
      * "new Car(...)" в любом другом месте программы НЕЛЬЗЯ.
      * Единственный способ создать машину — использовать вложенный класс CarBuilder.
      */
-    private Car(String modelName, int maxSpeed, int price) {
+    private Car(String brandName, String modelName, int maxSpeed, int price) {
+        this.brandName = brandName;
         this.modelName = modelName;
         this.maxSpeed = maxSpeed;
         this.price = price;
@@ -39,6 +41,7 @@ public class Car {
 
     // ГЕТТЕРЫ. Предоставляют доступ на чтение. Названия методов строго стандартизированы (getXxx),
     // чтобы многие фреймворки и библиотеки (например, для работы с таблицами в Swing) могли их находить автоматически.
+    public String getBrandName() { return brandName; }
     public String getModelName() { return modelName; }
     public int getMaxSpeed() { return maxSpeed; }
     public int getPrice() { return price; }
@@ -50,7 +53,7 @@ public class Car {
      */
     @Override
     public String toString() {
-        return "Название модели: " + modelName + ", максимальная скорость: " + maxSpeed + " км/ч , цена: $" + price;
+        return "Бренд: " + brandName + ", название модели: " + modelName + ", максимальная скорость: " + maxSpeed + " км/ч , цена: $" + price;
     }
 
     // =========================================================================
@@ -65,6 +68,7 @@ public class Car {
     public static class CarBuilder {
 
         // Временные поля строителя, куда мы будем сохранять значения до создания машины.
+        private String brandName;
         private String modelName;
         private int maxSpeed;
         private int price;
@@ -72,7 +76,27 @@ public class Car {
         // Компилируем регулярное выражение один раз (static final) для производительности.
         // Шаблон означает: от начала(^) до конца($) строки могут идти только буквы (рус/англ),
         // цифры, дефис и пробел в количестве от одного и более (+).
+        // Паттерн используется для марки и модели авто
         private static final Pattern NAME_PATTERN = Pattern.compile("^[a-zA-Zа-яА-ЯёЁ0-9\\- ]+$");
+
+        public CarBuilder setBrandName(String brandName) {
+            if (brandName == null) {
+                throw new IllegalArgumentException("Имя бренда не может быть null.");
+            }
+            String trimmedBrand = brandName.trim(); // Убираем пробелы по краям
+            if (trimmedBrand.isEmpty()) {
+                throw new IllegalArgumentException("Имя бренда не должно быть пустым.");
+            }
+            if (trimmedBrand.length() > 20) {
+                throw new IllegalArgumentException("Имя бренда длиннее 20 символов.");
+            }
+            // Проверяем строку на соответствие регулярному выражению.
+            if (!NAME_PATTERN.matcher(trimmedBrand).matches()) {
+                throw new IllegalArgumentException("Имя бренда содержит недопустимые символы. Разрешены только русские/английские буквы, цифры, дефис и пробелы.");
+            }
+            this.brandName = trimmedBrand;
+            return this; // Возвращаем текущий объект Builder'а
+        }
 
         /**
          * Метод для установки имени с одновременной валидацией.
@@ -122,7 +146,7 @@ public class Car {
          * Если все предыдущие проверки (валидация) прошли успешно, объект будет создан.
          */
         public Car build() {
-            return new Car(modelName, maxSpeed, price);
+            return new Car(brandName, modelName, maxSpeed, price);
         }
     }
 }

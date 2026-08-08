@@ -117,15 +117,16 @@ public class MainController {
             // 1. Просим View дать нам СЫРЫЕ данные из кликнутой строки
             Object[] rowData = view.getTablePanel().getClickedRowData();
 
-            if (rowData != null && rowData.length == 3) {
+            if (rowData != null && rowData.length == 4) {
                 try {
-                    // 2. Извлекаем данные
-                    String modelName = (String) rowData[0];
-                    int speed = (int) rowData[1];
-                    int price = (int) rowData[2];
+                    // 2. Извлекаем данные. Марка и Модель - это String, числа - Integer
+                    String brandName = (String) rowData[0];
+                    String modelName = (String) rowData[1];
+                    int speed = (int) rowData[2]; // Автоупаковка Integer -> int
+                    int price = (int) rowData[3];
 
                     // 3. Передаем сырые данные в Модель и получаем готовый текст ответа
-                    String resultMessage = model.multithreadCounting(modelName, speed, price);
+                    String resultMessage = model.multithreadCounting(brandName, modelName, speed, price);
 
                     // 4. MessageHandler выведет этот текст И в консоль, И в окно лога (черным цветом)
                     messageHandler.printMessage(Color.BLACK, resultMessage);
@@ -163,19 +164,20 @@ public class MainController {
             addDialog.getBtnAddModel().addActionListener(ev -> {
                 try {
                     // Считываем данные из текстовых полей диалогового окна.
+                    String brandName = addDialog.getBrandText();
                     String modelName = addDialog.getModelText();
                     // Парсим строки в числа. Может выбросить NumberFormatException.
                     int speed = Integer.parseInt(addDialog.getSpeedText());
                     int price = Integer.parseInt(addDialog.getPriceText());
 
                     // Передаем данные в Модель. Модель сама создаст объект и провалидирует его.
-                    model.addSingleCar(modelName, speed, price);
+                    model.addSingleCar(brandName, modelName, speed, price);
 
                     // Обновляем таблицу.
                     view.getTablePanel().updateTable(model.getCars());
 
                     // Пишем в лог об успехе.
-                    messageHandler.printMessage(new Color(0, 128, 0), "Успешно добавлена машина: " + modelName);
+                    messageHandler.printMessage(new Color(0, 128, 0), "Успешно добавлена машина: " + brandName + " " + modelName);
 
                     // Закрываем диалоговое окно.
                     addDialog.closeDialog();
@@ -322,7 +324,7 @@ public class MainController {
     /**
      * Логика кнопки "Очистить список".
      */
-    //TODO реализовать функционал кнопки
+    //TODO реализовать метод
     private void setupClearListButton() {
 
     }
@@ -330,7 +332,7 @@ public class MainController {
     /**
      * Логика кнопки "Очистить лог".
      */
-    //TODO реализовать функционал кнопки
+    //TODO реализовать метод
     private void setupClearLogButton() {
 
     }
@@ -338,7 +340,7 @@ public class MainController {
     /**
      * Логика кнопки "Выход".
      */
-    //TODO реализовать функционал кнопки
+    //TODO реализовать метод
     private void setupExitButton() {
 
     }
