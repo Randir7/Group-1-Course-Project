@@ -40,7 +40,6 @@ public class CustomCarCollection {
     /**
      * Добавление элемента в конец коллекции.
      */
-    //TODO реализовать метод
     public void add(Car car) {
         if (car == null){
             throw new IllegalArgumentException("Класс Car не может быть пустым");
@@ -54,7 +53,6 @@ public class CustomCarCollection {
     /**
      * Добавление другой коллекции в текущую.
      */
-    //TODO реализовать метод
     public void addAll(CustomCarCollection collection) {
         if(collection == null){
             throw new IllegalArgumentException("Коллекция не может быть пустой");
@@ -67,7 +65,6 @@ public class CustomCarCollection {
     /**
      * Получение элемента по индексу.
      */
-    //TODO реализовать метод
     public Car get(int index) {
         checkIndex(index);
         return array[index];
@@ -76,7 +73,7 @@ public class CustomCarCollection {
     /**
      * Возвращает количество реальных элементов в коллекции.
      */
-    //TODO реализовать метод
+
     public int size() {
         return size;
     }
@@ -84,7 +81,7 @@ public class CustomCarCollection {
     /**
      * Очистка коллекции.
      */
-    //TODO реализовать метод
+
     public void clear() {
         for (int i = 0; i < size; i++){
             array[i] = null;
@@ -96,38 +93,48 @@ public class CustomCarCollection {
 
     // Вместо того чтобы писать 8 разных алгоритмов сортировки, мы пишем один общий метод сортировки,
     // а в эти методы передаем ему разные "правила сравнения" (Comparator).
-    //TODO реализовать метод
+
     public void sortByBrandAsc() {
         quickSort(Comparator.comparing(Car::getBrandName));
     }
-    //TODO реализовать метод
+
     public void sortByBrandDesc() {
         quickSort(Comparator.comparing(Car::getBrandName).reversed());
     }
-    //TODO реализовать метод
+
     public void sortByNameAsc() {
         quickSort(Comparator.comparing(Car::getModelName));
     }
-    //TODO реализовать метод
+
     public void sortByNameDesc() {
         quickSort(Comparator.comparing(Car::getModelName).reversed());
     }
-    //TODO реализовать метод
+
     public void sortBySpeedAsc() {
         quickSort(Comparator.comparing(Car::getMaxSpeed));
     }
-    //TODO реализовать метод
+
     public void sortBySpeedDesc() {
         quickSort(Comparator.comparing(Car::getMaxSpeed).reversed());
     }
-    //TODO реализовать метод
+
     public void sortByPriceAsc() {
         quickSort(Comparator.comparingDouble(Car::getPrice));
     }
-    //TODO реализовать метод
+
     public void sortByPriceDesc() {
         quickSort(Comparator.comparingDouble(Car::getPrice).reversed());
     }
+
+    public void multikeySort() {
+        Comparator<Car> groupComparator = Comparator.comparing(Car::getBrandName)
+                .thenComparing(Car::getModelName)
+                .thenComparing(Car::getMaxSpeed)
+                .thenComparing(Car::getPrice);
+
+        quickSort(groupComparator);
+    }
+
     //TODO реализовать метод-алгоритм особой сортировки
     public void specialSort() {
         // TODO: Будущая особая сортировка
@@ -138,7 +145,7 @@ public class CustomCarCollection {
     /**
      * Увеличение размера массива.
      */
-    //TODO реализовать метод
+
     private void grow() {
         int newCapacity = array.length * 2;
         Car[] newArray = new Car[newCapacity];
@@ -149,7 +156,7 @@ public class CustomCarCollection {
     /**
      * Проверка выхода за границы массива.
      */
-    //TODO реализовать метод
+
     private void checkIndex(int index) {
         if (index < 0 || index >= size){
             throw new IndexOutOfBoundsException("Значение вышло за пределы массива");
@@ -160,7 +167,7 @@ public class CustomCarCollection {
      * Перегруженный метод addAll для добавления стандартного List.
      * Нужен для удобства, когда Модель загружает данные из файла (они лежат в List).
      */
-    //TODO реализовать метод
+
     public void addAll(List<Car> carList) {
         if(carList == null){
             throw new IllegalArgumentException("Класс Car не может быть пустым");
@@ -176,7 +183,7 @@ public class CustomCarCollection {
      * Если бы мы отдали массив, кто-то мог бы изменить его напрямую, минуя проверки коллекции.
      * Вместо этого мы создаем новую коллекцию (ArrayList), копируем туда элементы и отдаем её.
      */
-    //TODO реализовать метод
+
     public List<Car> toList() {
         List<Car> list = new ArrayList<>(size);
         for (int i = 0; i < size; i++){
@@ -188,7 +195,7 @@ public class CustomCarCollection {
     // =========================================================================
     // РЕАЛИЗАЦИЯ АЛГОРИТМА QUICKSORT (БЫСТРАЯ СОРТИРОВКА)
     // =========================================================================
-    //TODO реализовать кастомный алгоритм быстрой сортировки (quickSort)
+    
     /**
      * Быстрая сортировка. Сложность алгоритма в среднем O(n log n).
      * @param comparator Объект, который знает, как сравнивать два объекта Car между собой.

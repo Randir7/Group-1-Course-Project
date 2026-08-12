@@ -26,30 +26,36 @@ public class LogConsolePanel extends JPanel {
     private final StyledDocument styledDoc;
 
     public LogConsolePanel() {
-        // BorderLayout, чтобы скролл занял всё место на панели
         setLayout(new BorderLayout());
 
-        textPane = new JTextPane();
-        // Делаем консоль доступной только для чтения (пользователь не может стереть логи)
-        textPane.setEditable(false);
-        // Моноширинный шрифт (Monospaced) — классика для консолей.
-        // Все символы (включая пробелы) имеют одинаковую ширину, что позволяет
-        // ровно выравнивать столбцы текста, если это нужно.
-        textPane.setFont(new Font("Monospaced", Font.PLAIN, 16));
+        //Создаем JTextPane
+        textPane = new JTextPane() {
+            @Override
+            public boolean getScrollableTracksViewportWidth() {
+                // Возвращаем true, чтобы панель всегда сжималась по ширине порта просмотра,
+                // заставляя длинный текст переноситься на следующую строку.
+                return true;
+            }
+        };
 
-        // Получаем стилизованный документ, привязанный к этому текстовому полю.
+        textPane.setEditable(false);
+        textPane.setFont(new Font("Monospaced", Font.PLAIN, 16));
+        textPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5)); // Отступы от краев
+
         styledDoc = textPane.getStyledDocument();
 
-        // Оборачиваем текстовое поле в панель прокрутки (иначе текст уйдет за пределы экрана)
         JScrollPane scrollPane = new JScrollPane(textPane);
 
-        // Красивая рамка с заголовком
+        // 2. Полностью отключаем горизонтальную полосу прокрутки
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
         scrollPane.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), "ОКНО ЛОГ - КОНСОЛИ",
                 TitledBorder.LEFT, TitledBorder.TOP));
 
         add(scrollPane, BorderLayout.CENTER);
     }
+
 
     /**
      * Метод добавления цветного текста в консоль.

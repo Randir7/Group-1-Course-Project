@@ -78,6 +78,12 @@ public class DataTablePanel extends JPanel {
         // Привязываем модель к визуальной таблице
         table = new JTable(tableModel);
 
+        // Устанавливаем минимальную ширину для колонок, чтобы они не сжимались в 0
+        table.getColumnModel().getColumn(0).setMinWidth(80); // Марка
+        table.getColumnModel().getColumn(1).setMinWidth(100); // Модель
+        table.getColumnModel().getColumn(2).setMinWidth(250); // Макс. скорость
+        table.getColumnModel().getColumn(3).setMinWidth(80);  // Цена
+
         // --- УКРУПНЕНИЕ ТЕКСТА В ТАБЛИЦЕ ---
         // 1. Устанавливаем шрифт для ячеек таблицы (например, размер 16)
         table.setFont(new Font("SansSerif", Font.PLAIN, 16));

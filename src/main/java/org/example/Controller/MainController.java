@@ -64,6 +64,7 @@ public class MainController {
         setupAddFromFileButton();
         setupRandomListButton();
         setupSaveToFileButton();
+        setupMultikeySortButton();
         setupSpecialSortButton();
         setupClearListButton();
         setupClearLogButton();
@@ -295,6 +296,27 @@ public class MainController {
                     // Например, нет прав на запись в директорию.
                     messageHandler.printMessage(Color.RED, "Ошибка сохранения", ex.getMessage());
                 }
+            }
+        });
+    }
+
+    /**
+     * Логика кнопки "Общая сортировка".
+     */
+    private void setupMultikeySortButton() {
+        view.getButtonPanel().getBtnMultikeySort().addActionListener(e -> {
+            try {
+                // 1. Просим Модель выполнить общую сортировку
+                model.multikeySort();
+
+                // 2. Обновляем таблицу новыми (отсортированными) данными
+                view.getTablePanel().updateTable(model.getCars());
+
+                // 3. Логируем успешное выполнение
+                messageHandler.printMessage(new Color(0, 128, 0), "Общая сортировка успешно применена.");
+            } catch (Exception ex) {
+                // Если в будущем метод выбросит ошибку, перехватим её
+                messageHandler.printMessage(Color.RED, "Ошибка при общей сортировке", ex.getMessage());
             }
         });
     }

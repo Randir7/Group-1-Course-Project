@@ -26,6 +26,7 @@ public class ButtonPanel extends JPanel {
     private final JButton btnAddFromFile = new JButton("Добавить из файла");
     private final JButton btnRandomList = new JButton("Случайный список");
     private final JButton btnSaveToFile = new JButton("Сохранить в файл");
+    private final JButton btnMultikeySort = new JButton("Общая сортировка");
     private final JButton btnSpecialSort = new JButton("Особая сортировка");
     private final JButton btnClearList = new JButton("Очистить список");
     private final JButton btnClearLog = new JButton("Очистить лог");
@@ -63,6 +64,8 @@ public class ButtonPanel extends JPanel {
         add(btnRandomList, bc);
         bc.gridy++;
         add(btnSaveToFile, bc);
+        bc.gridy++;
+        add(btnMultikeySort, bc);
         bc.gridy++;
         add(btnSpecialSort, bc);
         bc.gridy++;
@@ -112,6 +115,10 @@ public class ButtonPanel extends JPanel {
 
     public JButton getBtnSaveToFile() {
         return btnSaveToFile;
+    }
+
+    public JButton getBtnMultikeySort() {
+        return btnMultikeySort;
     }
 
     public JButton getBtnSpecialSort() {
