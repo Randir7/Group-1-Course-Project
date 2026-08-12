@@ -135,9 +135,33 @@ public class CustomCarCollection {
         quickSort(groupComparator);
     }
 
-    //TODO реализовать метод-алгоритм особой сортировки
+    /**
+     * Особая сортировка по числовому полю maxSpeed:
+     * - объекты с чётным значением maxSpeed сортируются по возрастанию (натуральный порядок);
+     * - объекты с нечётным значением maxSpeed остаются на своих исходных позициях.
+     */
     public void specialSort() {
-        // TODO: Будущая особая сортировка
+        if(size <= 1){
+            return;
+        }
+        List<Car> evens = new ArrayList<>();
+        for (int i=0; i<size; i++){
+            if (array[i].getMaxSpeed() % 2 == 0){
+                evens.add(array[i]);
+            }
+        }
+        // Сортируем собранные чётные элементы по maxSpeed по возрастанию
+        evens.sort(Comparator.comparingInt(Car::getMaxSpeed));
+
+        // Возвращаем отсортированные чётные элементы обратно на те же позиции,
+        // где раньше стояли чётные значения
+        int evenIndex = 0;
+        for (int i = 0; i < size; i++) {
+            if (array[i].getMaxSpeed() % 2 == 0) {
+                array[i] = evens.get(evenIndex++);
+            }
+        }
+
     }
 
     // --- Внутренняя реализация ---
