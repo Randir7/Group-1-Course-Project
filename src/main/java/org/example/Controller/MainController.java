@@ -313,7 +313,7 @@ public class MainController {
                 view.getTablePanel().updateTable(model.getCars());
 
                 // 3. Логируем успешное выполнение
-                messageHandler.printMessage(new Color(0, 128, 0), "Общая сортировка успешно применена.");
+                messageHandler.printMessage(new Color(0, 128, 0), "Общая сортировка успешно выполнена.");
             } catch (Exception ex) {
                 // Если в будущем метод выбросит ошибку, перехватим её
                 messageHandler.printMessage(Color.RED, "Ошибка при общей сортировке", ex.getMessage());
@@ -330,12 +330,12 @@ public class MainController {
                 // Вызываем метод Модели. Пока это заглушка.
                 model.specialSort();
 
-                // Пока логика сортировки пуста, таблицу мы не обновляем.
-                // Выводим информационное сообщение (черный цвет).
-                messageHandler.printMessage(Color.BLACK, "Команда 'Особая сортировка' вызвана (режим заглушки).");
+                view.getTablePanel().updateTable(model.getCars());
 
-                // TODO: Когда логика будет готова, раскомментировать строку ниже:
-                // view.getTablePanel().updateTable(model.getCars());
+                // Выводим информационное сообщение (черный цвет).
+                messageHandler.printMessage(Color.BLACK, "Особая сортировка успешно выполнена.");
+
+
 
             } catch (Exception ex) {
                 messageHandler.printMessage(Color.RED, "Ошибка при особой сортировке", ex.getMessage());
