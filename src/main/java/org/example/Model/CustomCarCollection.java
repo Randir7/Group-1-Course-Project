@@ -161,7 +161,6 @@ public class CustomCarCollection {
                 array[i] = evens.get(evenIndex++);
             }
         }
-
     }
 
     // --- Внутренняя реализация ---

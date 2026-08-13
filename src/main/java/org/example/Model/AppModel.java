@@ -107,11 +107,66 @@ public class AppModel {
      * Читает файл построчно, проверяет формат с помощью регулярных выражений.
      * Не добавляет машины в основную коллекцию, а возвращает результат в объекте ParseResult.
      */
-    //TODO реализовать метод
     public ParseResult parseDataFromFile(Path filePath) {
         List<Car> parsedCars = new ArrayList<>();
         List<String> errorMessages = new ArrayList<>();
-        //реализуй метод здесь
+
+        // Регулярные выражения (Regex) для проверки строк.
+        // ^(\\d+)\\s*км/ч$ означает: строка должна начинаться(^) с цифр (\\d+),
+        // затем возможны пробелы (\\s*), и заканчиваться($) строкой "км/ч".
+        Pattern speedPattern = Pattern.compile("^(\\d+)\\s*км/ч$");
+        // ^\\$(\\d+)$ означает: начинается со знака доллара (\\$), затем цифры, и конец строки.
+        Pattern pricePattern = Pattern.compile("^\\$(\\d+)$");
+
+        // Используем try-with-resources (try со скобками).
+        // Это гарантирует, что файл автоматически закроется после чтения, даже если произойдет ошибка.
+        try (Stream<String> lines = Files.lines(filePath)) {
+            lines.forEach(line -> {
+                try {
+                    // Разбиваем строку по разделителю " / " (с пробелами)
+                    String[] parts = line.split("\\s+/\\s+");
+                    if (parts.length != 4) {
+                        throw new IllegalArgumentException("Неверный формат строки. Ожидалось 4 блока, разделенных ' / '.");
+                    }
+
+                    String brandName = parts[0].trim(); // Проверка на пустоту brandName...
+                    if (brandName.isEmpty()) {
+                        throw new IllegalArgumentException("Имя бренда не может быть пустым.");
+                    }
+
+                    String modelName = parts[1].trim();
+                    if (modelName.isEmpty()) {
+                        throw new IllegalArgumentException("Имя модели не может быть пустым.");
+                    }
+
+                    // Проверяем блок скорости
+                    Matcher speedMatcher = speedPattern.matcher(parts[2].trim());
+                    if (!speedMatcher.matches()) {
+                        throw new IllegalArgumentException("Неверный формат скорости. Ожидалось: '140 км/ч'.");
+                    }
+                    // group(1) достает из Matcher первую группу в скобках (только цифры)
+                    int speed = Integer.parseInt(speedMatcher.group(1));
+
+                    // Проверяем блок цены
+                    Matcher priceMatcher = pricePattern.matcher(parts[3].trim());
+                    if (!priceMatcher.matches()) {
+                        throw new IllegalArgumentException("Неверный формат цены. Ожидалось: '$11500'.");
+                    }
+                    int price = Integer.parseInt(priceMatcher.group(1));
+
+                    Car car = validateAndCreate(brandName, modelName, speed, price);
+                    parsedCars.add(car);
+
+                } catch (IllegalArgumentException e) {
+                    // Если строка кривая, мы не роняем программу, а добавляем ошибку в список.
+                    // Парсинг следующих строк продолжится.
+                    errorMessages.add("Строка: \"" + line + "\" | Ошибка: " + e.getMessage());
+                }
+            });
+        } catch (Exception e) {
+            // Сюда попадем, если файл не существует или нет прав на чтение
+            errorMessages.add("Критическая ошибка чтения файла: " + e.getMessage());
+        }
 
         return new ParseResult(parsedCars, errorMessages);
     }
