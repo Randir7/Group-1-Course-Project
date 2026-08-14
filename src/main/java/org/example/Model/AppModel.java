@@ -234,22 +234,68 @@ public class AppModel {
         // Переменная для записи количества найденных одинаковых автомобилей
         AtomicInteger count = new AtomicInteger(0);
         // Создаем эталонный объект Car (если данные невалидны, будет IllegalArgumentException)
-        Car targetCar = null; //сейчас это заглушка, чтобы код со StringBuilder компилировался
+        Car targetCar = new Car.CarBuilder()
+                .setBrandName(brandName)
+                .setModelName(modelName)
+                .setMaxSpeed(maxSpeed)
+                .setPrice(price)
+                .build();
 
 
         //реализуй метод здесь
+        final int size = cars.size();
+        if(size == 0) {
+            // Формируем текстовый ответ для Контроллера
+            StringBuilder sb = new StringBuilder();
+            sb.append("==================================================\n");
+            sb.append("Многопоточный подсчет завершен.\n");
+            sb.append("Искомый элемент: ").append(targetCar.getModelName())
+                    .append(" / ").append(targetCar.getMaxSpeed()).append(" км/ч / $").append(targetCar.getPrice()).append("\n");
+            sb.append("Количество вхождений в коллекцию: ").append(count.get()).append("\n");
+            sb.append("==================================================\n");
 
+            // Возвращаем результат, НЕ печатая его сами!
+            return sb.toString();
+        }
+//        Количество потоков
+        int threadCount = Runtime.getRuntime().availableProcessors();
+        threadCount = Math.min(threadCount, size);
 
-        // Формируем текстовый ответ для Контроллера
+        final int chunkSize = (size + threadCount - 1) / threadCount;
+
+        Thread[] threads = new Thread[threadCount];
+
+        for(int t = 0; t < threadCount; t++){
+            final int from = t*chunkSize;
+            final int to = Math.min(from + chunkSize, size);
+
+            threads[t] = new Thread(()->{
+               for (int i = from; i < to; i++){
+                   Car car = cars.get(i);
+
+                   if (targetCar.getBrandName().equals(car.getBrandName())
+                           && targetCar.getModelName().equals(car.getModelName())
+                           && targetCar.getMaxSpeed() == car.getMaxSpeed()
+                           && targetCar.getPrice() == car.getPrice()) {
+                       count.incrementAndGet();
+                   }
+               }
+            });
+            threads[t].start();
+        }
+        for(Thread thread: threads){
+            thread.join();
+        }
+        // Формируем текстовый ответ
         StringBuilder sb = new StringBuilder();
         sb.append("==================================================\n");
         sb.append("Многопоточный подсчет завершен.\n");
         sb.append("Искомый элемент: ").append(targetCar.getModelName())
-                .append(" / ").append(targetCar.getMaxSpeed()).append(" км/ч / $").append(targetCar.getPrice()).append("\n");
+                .append(" / ").append(targetCar.getMaxSpeed()).append(" км/ч / $")
+                .append(targetCar.getPrice()).append("\n");
         sb.append("Количество вхождений в коллекцию: ").append(count.get()).append("\n");
         sb.append("==================================================\n");
 
-        // Возвращаем результат, НЕ печатая его сами!
         return sb.toString();
     }
 
