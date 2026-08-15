@@ -142,7 +142,7 @@ public class AppModel {
                     // Проверяем блок скорости
                     Matcher speedMatcher = speedPattern.matcher(parts[2].trim());
                     if (!speedMatcher.matches()) {
-                        throw new IllegalArgumentException("Неверный формат скорости. Ожидалось: '140 км/ч'.");
+                        throw new IllegalArgumentException("Неверный формат скорости. Корректный формат: '140 км/ч'.");
                     }
                     // group(1) достает из Matcher первую группу в скобках (только цифры)
                     int speed = Integer.parseInt(speedMatcher.group(1));
@@ -150,7 +150,7 @@ public class AppModel {
                     // Проверяем блок цены
                     Matcher priceMatcher = pricePattern.matcher(parts[3].trim());
                     if (!priceMatcher.matches()) {
-                        throw new IllegalArgumentException("Неверный формат цены. Ожидалось: '$11500'.");
+                        throw new IllegalArgumentException("Неверный формат цены. Корректный формат: '$11500'.");
                     }
                     int price = Integer.parseInt(priceMatcher.group(1));
 
@@ -224,11 +224,9 @@ public class AppModel {
      * Метод возвращает готовый текст результата для Контроллера.
      *
      * @return Строка с результатами подсчета.
-     * @throws IllegalArgumentException Если данные невалидны.
      * @throws IllegalStateException Если список машин пуст.
      * @throws InterruptedException Если потоки были прерваны.
      */
-    //TODO реализовать метод
     public String multithreadCounting(String brandName, String modelName, int maxSpeed, int price)
             throws InterruptedException {
         // Переменная для записи количества найденных одинаковых автомобилей
@@ -241,21 +239,10 @@ public class AppModel {
                 .setPrice(price)
                 .build();
 
-
-        //реализуй метод здесь
         final int size = cars.size();
-        if(size == 0) {
-            // Формируем текстовый ответ для Контроллера
-            StringBuilder sb = new StringBuilder();
-            sb.append("==================================================\n");
-            sb.append("Многопоточный подсчет завершен.\n");
-            sb.append("Искомый элемент: ").append(targetCar.getModelName())
-                    .append(" / ").append(targetCar.getMaxSpeed()).append(" км/ч / $").append(targetCar.getPrice()).append("\n");
-            sb.append("Количество вхождений в коллекцию: ").append(count.get()).append("\n");
-            sb.append("==================================================\n");
 
-            // Возвращаем результат, НЕ печатая его сами!
-            return sb.toString();
+        if(size == 0) {
+            throw new IllegalStateException("Список машин пуст, подсчет невозможен.");
         }
 //        Количество потоков
         int threadCount = Runtime.getRuntime().availableProcessors();
