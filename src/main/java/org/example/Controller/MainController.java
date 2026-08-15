@@ -371,9 +371,11 @@ public class MainController {
     /**
      * Логика кнопки "Выход".
      */
-    //TODO реализовать метод
     private void setupExitButton() {
-
+        JButton exitButton = view.getButtonPanel().getBtnExit();
+        exitButton.addActionListener(e -> {
+            System.exit(0);
+        });
     }
 
 
