@@ -176,12 +176,15 @@ public class AppModel {
      * Метод объявлен с throws IOException. Это значит, что он перекладывает
      * ответственность за обработку ошибок ввода-вывода на того, кто его вызывает (на Контроллер).
      */
-    //TODO реализовать метод
     public void saveDataToFile(Path filePath) throws IOException {
+        if (cars.size() == 0) {
+            throw new IllegalStateException("Список машин пуст, нечего сохранять.");
+        }
+
         List<Car> carsList = cars.toList();
         try (var writer = Files.newBufferedWriter(filePath)) {
             for (Car car : carsList) {
-                String line = String.format("%s,%s,%d,%d%n",
+                String line = String.format("%s / %s / %d км/ч / $%d",
                         car.getBrandName(),
                         car.getModelName(),
                         car.getMaxSpeed(),
