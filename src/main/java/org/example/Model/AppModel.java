@@ -178,7 +178,17 @@ public class AppModel {
      */
     //TODO реализовать метод
     public void saveDataToFile(Path filePath) throws IOException {
-
+        List<Car> carsList = cars.toList();
+        try (var writer = Files.newBufferedWriter(filePath)) {
+            for (Car car : carsList) {
+                String line = String.format("%s,%s,%d,%d%n",
+                        car.getBrandName(),
+                        car.getModelName(),
+                        car.getMaxSpeed(),
+                        car.getPrice());
+                writer.write(line);
+            }
+        }
     }
 
     /**
