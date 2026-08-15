@@ -346,25 +346,36 @@ public class MainController {
     /**
      * Логика кнопки "Очистить список".
      */
-    //TODO реализовать метод
     private void setupClearListButton() {
-
+        JButton clearListButton = view.getButtonPanel().getBtnClearList();
+        clearListButton.addActionListener(e -> {
+            //Очищаем модель (коллекцию cars)
+            model.clearData();
+            //Обновляем таблицу, передав пустой список (updateTable сам очистит таблицу)
+            view.getTablePanel().updateTable(model.getCars());
+            //Выводим сообщение в лог
+            messageHandler.printMessage(Color.BLACK, "Список машин очищен.");
+        });
     }
 
     /**
      * Логика кнопки "Очистить лог".
      */
-    //TODO реализовать метод
     private void setupClearLogButton() {
-
+        JButton clearLogButton = view.getButtonPanel().getBtnClearLog();
+        clearLogButton.addActionListener(e -> {
+            view.getLogPanel().clearLog();
+        });
     }
 
     /**
      * Логика кнопки "Выход".
      */
-    //TODO реализовать метод
     private void setupExitButton() {
-
+        JButton exitButton = view.getButtonPanel().getBtnExit();
+        exitButton.addActionListener(e -> {
+            System.exit(0);
+        });
     }
 
 
