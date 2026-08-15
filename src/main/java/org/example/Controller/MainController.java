@@ -348,7 +348,15 @@ public class MainController {
      */
     //TODO реализовать метод
     private void setupClearListButton() {
-
+        JButton clearListButton = view.getButtonPanel().getBtnClearList();
+        clearListButton.addActionListener(e -> {
+            //Очищаем модель (коллекцию cars)
+            model.clearData();
+            //Обновляем таблицу, передав пустой список (updateTable сам очистит таблицу)
+            view.getTablePanel().updateTable(model.getCars());
+            //Выводим сообщение в лог
+            messageHandler.printMessage(Color.BLACK, "Список машин очищен.");
+        });
     }
 
     /**
