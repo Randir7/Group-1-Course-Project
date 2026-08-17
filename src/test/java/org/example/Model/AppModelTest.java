@@ -144,7 +144,7 @@ class AppModelTest {
         assertEquals(0, result.cars.size());
         assertEquals(1, result.errors.size());
         // Проверяем, что парсер понял, что именно скорость кривая
-        assertTrue(result.errors.get(0).contains("Неверный формат скорости. Ожидалось: '140 км/ч'."));
+        assertTrue(result.errors.get(0).contains("Неверный формат скорости. Корректный формат: '140 км/ч'."));
     }
 
     @Test
@@ -158,7 +158,7 @@ class AppModelTest {
 
         assertEquals(0, result.cars.size());
         assertEquals(1, result.errors.size());
-        assertTrue(result.errors.get(0).contains("Неверный формат цены. Ожидалось: '$11500'."));
+        assertTrue(result.errors.get(0).contains("Неверный формат цены. Корректный формат: '$11500'."));
     }
 
     @Test
