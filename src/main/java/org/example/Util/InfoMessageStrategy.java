@@ -37,6 +37,6 @@ public class InfoMessageStrategy implements MessageStrategy {
         // Отправляем текст в графическую панель логов черным цветом (Color.BLACK).
         // В интерфейсе это будет выглядеть как нейтральная информация,
         // которая не отвлекает внимание, как красные ошибки или зеленые успехи.
-        logPanel.appendColoredText(textToPrint, Color.BLACK);
+        logPanel.appendColoredText("\n" + textToPrint, Color.BLACK);
     }
 }

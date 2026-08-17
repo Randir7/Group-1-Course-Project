@@ -3,6 +3,7 @@ package org.example.View;
 import org.example.Model.Car;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -77,6 +78,15 @@ public class DataTablePanel extends JPanel {
 
         // Привязываем модель к визуальной таблице
         table = new JTable(tableModel);
+
+        // --- ВЫРАВНИВАНИЕ ЧИСЕЛ ПО ЛЕВОМУ КРАЮ В КОЛОНКАХ С ЦИФРАМИ ---
+        // Создаем стандартный рендерер
+        DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
+        // Указываем ему выравнивание по левому краю
+        leftRenderer.setHorizontalAlignment(JLabel.LEFT);
+        // Применяем этот рендерер ко всем колонкам с типом Integer (Скорость и Цена)
+        table.setDefaultRenderer(Integer.class, leftRenderer);
+
 
         // Устанавливаем минимальную ширину для колонок, чтобы они не сжимались в 0
         table.getColumnModel().getColumn(0).setMinWidth(80); // Марка
@@ -182,7 +192,7 @@ public class DataTablePanel extends JPanel {
 
         // Создаем красивую рамку с текстовым заголовком
         scrollPane.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), "ОКНО - ТАБЛИЦА С ДАННЫМИ",
+                BorderFactory.createEtchedBorder(), "ТАБЛИЦА С ДАННЫМИ",
                 TitledBorder.LEFT, TitledBorder.TOP));
 
         // Добавляем прокрутку с таблицей в центр панели
@@ -199,16 +209,6 @@ public class DataTablePanel extends JPanel {
     // Контроллер вызовет этот метод, чтобы узнать, какую колонку выбрал пользователь
     public int getClickedColumnIndex() {
         return clickedColumnIndex;
-    }
-
-    //TODO удалить в релизной версии если не найдется применения
-    public JTable getTable() {
-        return table;
-    }
-
-    //TODO удалить в релизной версии если не найдется применения
-    public DefaultTableModel getTableModel() {
-        return tableModel;
     }
 
 
@@ -237,10 +237,6 @@ public class DataTablePanel extends JPanel {
     // МЕТОДЫ УПРАВЛЕНИЯ ДАННЫМИ (Вызываются Контроллером)
     // =========================================================================
 
-    //TODO удалить в релизной версии если не найдется применения
-//    public void addRow(Object[] rowData) {
-//        tableModel.addRow(rowData);
-//    }
 
     // setRowCount(0) — самый быстрый способ удалить все строки из DefaultTableModel
     public void clearTable() {

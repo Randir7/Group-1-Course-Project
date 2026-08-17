@@ -200,6 +200,7 @@ public class MainController {
      * Логика кнопки "Добавить из файла".
      */
     private void setupAddFromFileButton() {
+
         view.getButtonPanel().getBtnAddFromFile().addActionListener(e -> {
             // JFileChooser — стандартный компонент Swing для выбора файлов.
             JFileChooser fileChooser = new JFileChooser();

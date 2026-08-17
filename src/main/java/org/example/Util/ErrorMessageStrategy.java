@@ -33,7 +33,7 @@ public class ErrorMessageStrategy implements MessageStrategy {
 
         // Проверяем на null и пустоту, чтобы не выводить лишние пустые строки.
         if (message != null && !message.isEmpty()) {
-            sb.append("[ОШИБКА] ").append(message).append("\n");
+            sb.append("\n[ОШИБКА] ").append(message).append("\n");
         }
 
         // Детали ошибки могут быть, а могут и не быть (если error == null)

@@ -50,7 +50,7 @@ public class LogConsolePanel extends JPanel {
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         scrollPane.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), "ОКНО ЛОГ - КОНСОЛИ",
+                BorderFactory.createEtchedBorder(), "ЛОГ КОНСОЛИ",
                 TitledBorder.LEFT, TitledBorder.TOP));
 
         add(scrollPane, BorderLayout.CENTER);

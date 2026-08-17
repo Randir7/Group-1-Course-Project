@@ -34,7 +34,7 @@ public class SuccessMessageStrategy implements MessageStrategy {
         // Используем тернарный оператор (условие ? true : false).
         // Если сообщение не null и не пустое, добавляем к нему префикс "[УСПЕХ] "
         // и перенос строки (\n) в конце. Иначе оставляем строку пустой.
-        String textToPrint = (message != null && !message.isEmpty()) ? "[УСПЕХ] " + message + "\n" : "";
+        String textToPrint = (message != null && !message.isEmpty()) ? "\n[УСПЕХ] " + message + "\n" : "";
 
         // System.out — стандартный поток вывода в консоль IDE.
         // В консоли он будет обычного цвета (в отличие от System.err, который красный).

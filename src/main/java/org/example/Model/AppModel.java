@@ -32,7 +32,6 @@ public class AppModel {
 
     // Хранилище данных. Мы используем нашу собственную реализацию коллекции
     // вместо стандартного ArrayList, чтобы продемонстрировать работу алгоритмов "под капотом".
-    //TODO сейчас это заглушка, надо дописать класс кастомной коллекции чтобы программа работала корректно
     private final CustomCarCollection cars = new CustomCarCollection();
 
     /**
@@ -53,20 +52,66 @@ public class AppModel {
      */
     public List<String> addCarsFromUserFile(Path filePath) {
         ParseResult result = parseDataFromFile(filePath);
-        cars.addAll(result.cars);
+        //заполнение через стрим чтобы соответсвовать условию задачи
+        result.cars.forEach(cars::add);
         return result.errors;
     }
 
     /**
-     * Из заранее созданного списка randomData.txt (лежит в папке resources)
-     * создает указанное количество машин и добавляет их в список cars модели.
+     * Из заранее созданного списка создает указанное количество машин
+     * и добавляет их в список cars модели.
      * Заполнение коллекции реализовано через Stream API.
      */
-    //TODO реализовать метод
     public List<String> addRandomCars(int count) {
         List<String> errorMessages = new ArrayList<>();
 
-        //реализуй метод здесь
+        try {
+            // 1. Получаем путь к файлу из папки resources
+            URL resourceUrl = getClass().getResource("/randomData.txt");
+            if (resourceUrl == null) {
+                throw new IllegalArgumentException("Файл ресурсов randomData.txt не найден!");
+            }
+
+            Path filePath = Paths.get(resourceUrl.toURI());
+
+            // 2. Читаем и парсим все машины из файла
+            ParseResult result = parseDataFromFile(filePath);
+            //заполнение коллекции в стриме для выполнения условия задачи
+            result.errors.forEach(errorMessages::add);
+
+            List<Car> availableCars = result.cars;
+
+            if (availableCars.isEmpty() && count > 0) {
+                errorMessages.add("В файле randomData.txt нет валидных машин для генерации.");
+                return errorMessages;
+            }
+
+            Random random = new Random();
+
+            // 3. СОЗДАНИЕ МАШИН ЧЕРЕЗ STREAM API
+            // IntStream.range(0, count) создает поток чисел от 0 до count (не включая count)
+            List<Car> generatedCars = IntStream.range(0, count)
+                    .mapToObj(i -> {
+                        // Генерируем случайный индекс
+                        int randomIndex = random.nextInt(availableCars.size());
+                        Car originalCar = availableCars.get(randomIndex);
+
+                        // Создаем независимую копию машины, передавая все 4 параметра
+                        return validateAndCreate(
+                                originalCar.getBrandName(),
+                                originalCar.getModelName(),
+                                originalCar.getMaxSpeed(),
+                                originalCar.getPrice()
+                        );
+                    })
+                    .collect(Collectors.toList()); // Собираем результаты в список
+
+            // 4. Добавляем сгенерированный список в нашу кастомную коллекцию
+            cars.addAll(generatedCars);
+
+        } catch (Exception e) {
+            errorMessages.add("Критическая ошибка при генерации случайных машин: " + e.getMessage());
+        }
 
         return errorMessages;
     }
@@ -184,7 +229,7 @@ public class AppModel {
         List<Car> carsList = cars.toList();
         try (var writer = Files.newBufferedWriter(filePath)) {
             for (Car car : carsList) {
-                String line = String.format("%s / %s / %d км/ч / $%d",
+                String line = String.format("%s / %s / %d км/ч / $%d%n",
                         car.getBrandName(),
                         car.getModelName(),
                         car.getMaxSpeed(),
