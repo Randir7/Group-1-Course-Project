@@ -11,6 +11,7 @@ Aston Martin / DBS 770 Ultimate / 3400 км/ч / $387000
 Lada / Granta / 179 км/ч / $11000
 Lada / Vesta / 182 км/ч / $16000
 Lada / Niva Legend / 142 км/ч / $10500
+Lada / Niva Legend / 142 км/ч / $10500
 Changan / Alsvin / 180 км/ч / $18500
 Geely / %%Emgrand / 10км/ч8 / $22000
 Renault Logan172 км/ч$14000
@@ -24,11 +25,15 @@ Mercedes-Benz / E-Class / 240 км/ч / $65000
 Volvo / XC90 / 210 км/ч / $60000
 Lexus / RX 450h / 200 км/ч / $58000
 Subaru / WRX STI / 255 км/ч / $40000
+Subaru / WRX STI / 255 км/ч / $40000
 Mitsubishi / Lancer Evolution / 250 км/ч / $45000
 Nissan / GT-R / 315 км/ч / $115000
 Infiniti / Q50 / 230 км/ч / $50000
 Acura / TLX / 220 км/ч / $45000
 Genesis / G90 / 240 км/ч / $70000
+Cadillac / CT5-V / 320 км/ч / $85000
+Cadillac / CT5-V / 320 км/ч / $85000
+Cadillac / CT5-V / 320 км/ч / $85000
 Cadillac / CT5-V / 320 км/ч / $85000
 Lincoln / Navigator / 200 км/ч / $80000
 Buick / Enclave / 190 км/ч / $55000
@@ -49,6 +54,12 @@ Rolls-Royce / Phantom / 250 км/ч / $450000
 Land Rover / Range Rover / 220 км/ч / $130000
 Jaguar / F-Type / 300 км/ч / $75000
 Aston Martin / Vantage / 325 км/ч / $150000
+Audi / Q7 / 250 км/ч / $70000
+Audi / Q7 / 250 км/ч / $70000
+Audi / Q7 / 250 км/ч / $70000
+Audi / Q7 / 250 км/ч / $70000
+Audi / Q7 / 250 км/ч / $70000
+Audi / Q7 / 250 км/ч / $70000
 Audi / Q7 / 250 км/ч / $70000
 BMW / X5 M / 290 км/ч / $110000
 Mercedes-Benz / S-Class / 250 км/ч / $120000
