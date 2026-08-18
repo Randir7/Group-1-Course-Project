@@ -1,0 +1,35 @@
+BMW / X5 / 257 км/ч / $88000
+BMW / 5 Series / 250 км/ч / $64000
+Toyota / Hilux / 170 км/ч / $43000
+Toyota / Camry / 230 км/ч / $42000
+Volkswagen / Passat / 220 км/ч / $39500
+BMW / M4 / 250 км/ч / $79000
+BMW / 7 Series / 257 км/ч / $98000
+Hyundai / Tucson / 195 км/ч / $32000
+BMW / 3 Series / 251 км/ч / $52000
+Hyundai / Ioniq 5 / 185 км/ч / $46000
+Hyundai / Palisade / 211 км/ч / $49000
+Toyota / Camry / 217 км/ч / $35000
+BMW / X5 / 230 км/ч / $75000
+Hyundai / Elantra / 185 км/ч / $23500
+Volkswagen / Tiguan / 210 км/ч / $41000
+Toyota / Supra / 250 км/ч / $57000
+Hyundai / Santa Fe / 210 км/ч / $44000
+Volkswagen / ID4 / 160 км/ч / $40000
+Volkswagen / Golf / 250 км/ч / $38000
+Hyundai / Tucson / 180 км/ч / $28000
+BMW / X3 / 240 км/ч / $56000
+BMW / 3 Series / 242 км/ч / $45000
+BMW / 5 Series / 250 км/ч / $58000
+Volkswagen / Tiguan / 190 км/ч / $34000
+Volkswagen / Touareg / 225 км/ч / $68000
+Hyundai / Sonata / 209 км/ч / $27000
+Hyundai / Santa Fe / 190 км/ч / $39000
+Volkswagen / Passat / 220 км/ч / $36000
+Toyota / RAV4 / 185 км/ч / $33000
+Volkswagen / Arteon / 245 км/ч / $48000
+Volkswagen / Polo / 175 км/ч / $17000
+BMW / X3 / 215 км/ч / $49000
+Hyundai / Creta / 170 км/ч / $19000
+Hyundai / Elantra / 185 км/ч / $21000
+Volkswagen / Golf / 200 км/ч / $26000

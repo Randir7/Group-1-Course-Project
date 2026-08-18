@@ -335,8 +335,9 @@ public class AppModel {
         StringBuilder sb = new StringBuilder();
         sb.append("==================================================\n");
         sb.append("Многопоточный подсчет завершен.\n");
-        sb.append("Искомый элемент: ").append(targetCar.getModelName())
-                .append(" / ").append(targetCar.getMaxSpeed()).append(" км/ч / $")
+        sb.append("Искомый элемент: ").append(targetCar.getBrandName()).append(" / ")
+                .append(targetCar.getModelName()).append(" / ")
+                .append(targetCar.getMaxSpeed()).append(" км/ч / $")
                 .append(targetCar.getPrice()).append("\n");
         sb.append("Количество вхождений в коллекцию: ").append(count.get()).append("\n");
         sb.append("==================================================\n");
